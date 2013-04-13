@@ -19,7 +19,6 @@ def handle_conn(conn):
     conn.settimeout(settings.CONN_TIMEOUT)
     while True:
         data = conn.recv(1024)
-        print data
         if not data:
             break
         conn.sendall(data)
