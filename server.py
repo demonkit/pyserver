@@ -12,17 +12,18 @@ sock.bind((settings.HOST, settings.PORT))
 
 sock.listen(10)
 
+
 def handle_conn(conn):
-    reply = "HTTP/1.1 200 OK\n"
-    conn.sendall(reply)
+    reply = "HTTP/1.1 200 OK\r\n"
+    conn.send(reply)
+    conn.settimeout(settings.CONN_TIMEOUT)
     while True:
-        data = conn.recv(2048)
+        data = conn.recv(1024)
+        print data
         if not data:
             break
-        conn.sendall(reply)
+        conn.sendall(data)
     conn.close()
-        
-
 
 while True:
     conn, addr = sock.accept()
