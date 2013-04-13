@@ -15,11 +15,8 @@ sock.listen(10)
 def handle_conn(conn):
     reply = "HTTP/1.1 200 OK\n"
     conn.sendall(reply)
-    while True:
-        data = conn.recv(2048)
-        if not data:
-            break
-        conn.sendall(reply)
+    data = conn.recv(2048)
+    conn.sendall(reply)
     conn.close()
         
 
