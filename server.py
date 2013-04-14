@@ -18,10 +18,16 @@ def handle_conn(conn):
     conn.send(reply)
     conn.settimeout(settings.CONN_TIMEOUT)
     while True:
-        data = conn.recv(1024)
+        try:
+            data = conn.recv(1024)
+        except Exception, e:
+            print "connetion down,msg:", msg
+            break
         if not data:
             break
         conn.sendall(data)
+    http_entity = settings.HTTP_ENTITY
+    conn.sendall(http_entity)
     conn.close()
 
 while True:
